@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Private Volleyball Lessons</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ⚙️  SETUP — EDIT THESE TWO THINGS, THEN YOU'RE DONE
+   1. Get a free access key at https://web3forms.com (takes 30 sec,
+      just enter the email you want notifications sent to).
+   2. Paste the key + your details in the CONFIG block in the
+      <script> at the very bottom of this file.
+   ============================================================ */
+:root{
+  --sand:#f4ece0;
+  --sand-2:#ece0cd;
+  --ink:#1f2a2e;
+  --court:#0f5f57;       /* deep court teal-green */
+  --court-2:#13776c;
+  --coral:#ec6a45;       /* volleyball accent */
+  --coral-2:#f5895f;
+  --line:rgba(31,42,46,.14);
+  --card:#fffaf2;
+  --shadow:0 18px 40px -22px rgba(15,95,87,.45);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--sand);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(circle at 12% 8%,rgba(236,106,69,.07),transparent 45%),
+                   radial-gradient(circle at 88% 92%,rgba(15,95,87,.08),transparent 45%);
+}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+/* HEADER */
+header{padding:30px 0 10px}
+.brand{display:flex;align-items:center;gap:14px}
+.ball{
+  width:46px;height:46px;border-radius:50%;flex:none;
+  background:var(--court);position:relative;overflow:hidden;
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.25);
+}
+.ball::before,.ball::after{
+  content:'';position:absolute;border-radius:50%;
+  border:2px solid rgba(255,255,255,.55);
+}
+.ball::before{inset:-22px -8px auto auto;width:46px;height:46px}
+.ball::after{inset:auto auto -22px -10px;width:46px;height:46px}
+.brand-name{font-family:'Fraunces',serif;font-weight:900;font-size:22px;letter-spacing:-.01em}
+.brand-name span{color:var(--coral)}
+
+/* HERO */
+.hero{padding:42px 0 30px;position:relative}
+.eyebrow{
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--court);font-weight:600;margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:'';width:26px;height:2px;background:var(--coral)}
+.hero h1{
+  font-family:'Fraunces',serif;font-weight:900;
+  font-size:clamp(40px,6.5vw,72px);line-height:.98;letter-spacing:-.02em;
+  max-width:14ch;
+}
+.hero h1 em{font-style:italic;color:var(--coral)}
+.hero p{font-size:18px;max-width:52ch;margin-top:20px;color:#41504f}
+.hero-meta{display:flex;flex-wrap:wrap;gap:26px;margin-top:28px}
+.hero-meta div{font-size:14px}
+.hero-meta b{display:block;font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--court)}
+
+/* TABS */
+.tabs{display:flex;gap:8px;margin:38px 0 0;border-bottom:2px solid var(--line)}
+.tab{
+  font-family:'Outfit',sans-serif;font-weight:600;font-size:15px;
+  padding:14px 22px;border:none;background:none;cursor:pointer;
+  color:#7a857f;position:relative;transition:color .18s;
+}
+.tab:hover{color:var(--ink)}
+.tab.active{color:var(--court)}
+.tab.active::after{
+  content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--court);
+}
+.panel{display:none;padding:34px 0 70px;animation:rise .45s ease}
+.panel.active{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* SCHEDULE */
+.section-h{font-family:'Fraunces',serif;font-size:28px;font-weight:700;margin-bottom:6px}
+.section-sub{color:#5a6664;margin-bottom:26px;max-width:60ch}
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+.day{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:18px;box-shadow:var(--shadow);
+}
+.day-name{font-family:'Fraunces',serif;font-weight:700;font-size:17px}
+.day-date{font-size:13px;color:#8a948f;margin-bottom:14px}
+.slot{
+  display:block;width:100%;text-align:left;border:1px solid var(--line);
+  background:var(--sand);border-radius:11px;padding:10px 13px;margin-bottom:8px;
+  font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;color:var(--ink);
+  cursor:pointer;transition:all .15s;
+}
+.slot:hover{border-color:var(--court);background:#fff;transform:translateX(3px)}
+.slot.none{opacity:.5;cursor:default;background:transparent;font-style:italic}
+.slot.none:hover{transform:none;border-color:var(--line)}
+
+/* FORM */
+.form-card{
+  background:var(--card);border:1px solid var(--line);border-radius:22px;
+  padding:30px;max-width:600px;box-shadow:var(--shadow);
+}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px;letter-spacing:.01em}
+.field .req{color:var(--coral)}
+.field input,.field select,.field textarea{
+  width:100%;font-family:'Outfit',sans-serif;font-size:15px;color:var(--ink);
+  background:var(--sand);border:1px solid var(--line);border-radius:12px;
+  padding:13px 15px;transition:border-color .15s,background .15s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--court);background:#fff;
+}
+.field textarea{resize:vertical;min-height:120px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.selected-slot{
+  background:rgba(15,95,87,.08);border:1px dashed var(--court);border-radius:12px;
+  padding:13px 15px;font-size:14px;font-weight:500;color:var(--court);margin-bottom:18px;
+  display:none;
+}
+.selected-slot.show{display:block}
+.btn{
+  font-family:'Outfit',sans-serif;font-weight:600;font-size:16px;
+  background:var(--coral);color:#fff;border:none;border-radius:13px;
+  padding:15px 30px;cursor:pointer;transition:all .18s;width:100%;
+  box-shadow:0 10px 22px -10px rgba(236,106,69,.7);
+}
+.btn:hover{background:var(--coral-2);transform:translateY(-1px)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.note{font-size:12.5px;color:#8a948f;margin-top:14px;line-height:1.5}
+.status{margin-top:16px;font-size:14px;font-weight:500;display:none}
+.status.show{display:block}
+.status.ok{color:var(--court)}
+.status.err{color:#c0392b}
+
+/* SETUP BANNER */
+.setup-banner{
+  background:#fff3cd;border:1px solid #e0c976;color:#6b5400;
+  border-radius:12px;padding:12px 16px;font-size:13px;margin:20px 0 0;display:none;
+}
+.setup-banner.show{display:block}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:38px;align-items:start}
+.about-lead{font-size:19px;color:#41504f;margin:4px 0 28px;line-height:1.55;max-width:55ch}
+.about-h{font-family:'Fraunces',serif;font-weight:700;font-size:20px;margin:26px 0 8px;color:var(--court)}
+.about-p{color:#4a5957;max-width:62ch}
+.about-side{position:sticky;top:24px}
+.stat-card{
+  background:var(--court);color:#fff;border-radius:20px;padding:24px;box-shadow:var(--shadow);
+}
+.stat-row{display:flex;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.16)}
+.stat-row:last-child{border-bottom:none}
+.stat-num{font-family:'Fraunces',serif;font-weight:900;font-size:30px;min-width:64px}
+.stat-label{font-size:14px;opacity:.85}
+.cred-list{list-style:none;margin:18px 0 0;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;box-shadow:var(--shadow)}
+.cred-list li{font-size:14px;padding:8px 0;border-bottom:1px solid var(--line);color:#41504f}
+.cred-list li:last-child{border-bottom:none}
+.about-cta{margin-top:18px}
+@media(max-width:760px){.about-grid{grid-template-columns:1fr}.about-side{position:static}}
+
+footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:#8a948f}
+@media(max-width:560px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="ball"></div>
+      <div class="brand-name">Set &amp; <span>Spike</span> — Private Volleyball</div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">One-on-one coaching</div>
+    <h1>Private volleyball lessons that <em>actually</em> move the needle.</h1>
+    <p>Personalized one-on-one coaching for young players — serving, passing, setting, hitting, and court IQ. Pick a time that works, tell me about your athlete, and we'll get to work.</p>
+    <div class="hero-meta">
+      <div><b>1:1</b>Individual focus</div>
+      <div><b>Ages 8–18</b>All skill levels</div>
+      <div><b>60 min</b>Per session</div>
+    </div>
+    <div class="setup-banner" id="setupBanner">
+      ⚙️ <b>Setup not finished:</b> add your free Web3Forms access key in the CONFIG block at the bottom of this file so booking + contact emails reach you.
+    </div>
+  </section>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="book">Book a Lesson</button>
+    <button class="tab" data-tab="about">About Me</button>
+    <button class="tab" data-tab="contact">Contact</button>
+  </div>
+
+  <!-- ============ BOOK TAB ============ -->
+  <section class="panel active" id="book">
+    <h2 class="section-h">Pick a time</h2>
+    <p class="section-sub">Here's my availability for the next two weeks. Tap a slot to request it — I'll confirm by email, usually same day. (Slots are first-come; booking sends me a request so we lock it in together.)</p>
+    <div class="days" id="days"></div>
+
+    <div style="height:34px"></div>
+
+    <div class="form-card">
+      <h2 class="section-h" style="font-size:22px">Your booking details</h2>
+      <p class="section-sub" style="margin-bottom:22px">Once you've picked a slot above, fill this in and send.</p>
+
+      <div class="selected-slot" id="selectedSlot"></div>
+
+      <form id="bookForm">
+        <div class="row">
+          <div class="field">
+            <label>Your name <span class="req">*</span></label>
+            <input type="text" name="parent_name" required>
+          </div>
+          <div class="field">
+            <label>Your email <span class="req">*</span></label>
+            <input type="email" name="email" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>Phone</label>
+            <input type="tel" name="phone">
+          </div>
+          <div class="field">
+            <label>Athlete's name <span class="req">*</span></label>
+            <input type="text" name="athlete_name" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>Athlete's age <span class="req">*</span></label>
+            <input type="number" name="age" min="4" max="18" required>
+          </div>
+          <div class="field">
+            <label>Skill level <span class="req">*</span></label>
+            <select name="skill_level" required>
+              <option value="">Select…</option>
+              <option>Beginner — brand new</option>
+              <option>Developing — some experience</option>
+              <option>Intermediate — plays regularly</option>
+              <option>Advanced — competitive / club</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>What do you want to work on?</label>
+          <textarea name="goals" placeholder="Serving, passing, hitting, confidence, tryout prep…"></textarea>
+        </div>
+        <input type="hidden" name="selected_time" id="bookSlotField">
+        <button type="submit" class="btn" id="bookBtn">Request this lesson</button>
+        <div class="status" id="bookStatus"></div>
+        <p class="note">Booking sends me an email request with these details. I'll reply to confirm the time. No payment is taken here.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT TAB ============ -->
+  <section class="panel" id="about">
+    <!-- ⚙️ EDIT EVERYTHING IN THIS TAB WITH YOUR OWN INFO -->
+    <div class="about-grid">
+      <div class="about-main">
+        <h2 class="section-h">Hi, I'm [Your Name]</h2>
+        <p class="about-lead">[One or two sentences on who you are and your coaching philosophy — e.g. "I've spent the last decade playing and coaching volleyball, and I love helping young players fall for the game the way I did."]</p>
+
+        <h3 class="about-h">Playing experience</h3>
+        <p class="about-p">[Where and how long you've played — high school varsity, college program, club, beach, adult leagues. Include positions you played and any standout achievements: championships, all-conference honors, captaincy, etc.]</p>
+
+        <h3 class="about-h">Coaching experience</h3>
+        <p class="about-p">[Who you've coached and for how long — club teams, camps, school programs, private lessons. Mention age groups and skill levels you work with best.]</p>
+
+        <h3 class="about-h">Certifications &amp; training</h3>
+        <p class="about-p">[Any coaching certifications, safety/first-aid training, background checks, or clinics you've completed. Parents look for this — list whatever you have.]</p>
+
+        <h3 class="about-h">My approach</h3>
+        <p class="about-p">[What a lesson with you looks like and what makes it different — fundamentals first, positive reinforcement, video breakdown, tryout prep, building confidence, etc.]</p>
+      </div>
+
+      <aside class="about-side">
+        <div class="stat-card">
+          <div class="stat-row"><span class="stat-num">10+</span><span class="stat-label">Years playing</span></div>
+          <div class="stat-row"><span class="stat-num">5+</span><span class="stat-label">Years coaching</span></div>
+          <div class="stat-row"><span class="stat-num">100+</span><span class="stat-label">Athletes coached</span></div>
+        </div>
+        <ul class="cred-list">
+          <li>Positions: [Setter / Outside / Libero…]</li>
+          <li>Specialties: [Serving, passing, hitting…]</li>
+          <li>Ages: 8–18, all skill levels</li>
+          <li>Location: [Where lessons happen]</li>
+        </ul>
+        <button class="btn about-cta" type="button" onclick="document.querySelector('[data-tab=book]').click()">Book a lesson</button>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT TAB ============ -->
+  <section class="panel" id="contact">
+    <h2 class="section-h">Questions? Send a message</h2>
+    <p class="section-sub">Not ready to book yet? Tell me about your athlete and what you're looking for, and I'll get back to you by email.</p>
+
+    <div class="form-card">
+      <form id="contactForm">
+        <div class="row">
+          <div class="field">
+            <label>Your name <span class="req">*</span></label>
+            <input type="text" name="parent_name" required>
+          </div>
+          <div class="field">
+            <label>Your email <span class="req">*</span></label>
+            <input type="email" name="email" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>Child's age <span class="req">*</span></label>
+            <input type="number" name="age" min="4" max="18" required>
+          </div>
+          <div class="field">
+            <label>Child's gender <span class="req">*</span></label>
+            <select name="gender" required>
+              <option value="">Select…</option>
+              <option>Girl</option>
+              <option>Boy</option>
+              <option>Non-binary</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Skill level <span class="req">*</span></label>
+          <select name="skill_level" required>
+            <option value="">Select…</option>
+            <option>Beginner — brand new</option>
+            <option>Developing — some experience</option>
+            <option>Intermediate — plays regularly</option>
+            <option>Advanced — competitive / club</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Message <span class="req">*</span></label>
+          <textarea name="message" required placeholder="Tell me what you're hoping to get out of lessons…"></textarea>
+        </div>
+        <button type="submit" class="btn" id="contactBtn">Send message</button>
+        <div class="status" id="contactStatus"></div>
+        <p class="note">Your message is emailed straight to me. I'll reply as soon as I can.</p>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="yr"></span> Set &amp; Spike Private Volleyball. Built for the love of the game.
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   ⚙️  CONFIG — EDIT THIS BLOCK
+   ============================================================ */
+const CONFIG = {
+  // 1) Paste your free Web3Forms access key here (get it at web3forms.com).
+  //    Leave as "YOUR_ACCESS_KEY_HERE" while testing — the site still works,
+  //    it just won't email until a real key is in.
+  WEB3FORMS_KEY: "YOUR_ACCESS_KEY_HERE",
+
+  // 2) Your weekly availability. Use 24h "HH:MM" times.
+  //    0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+  //    Add/remove times freely. Empty array = no lessons that day.
+  availability: {
+    0: [],                          // Sunday
+    1: ["16:00","17:00","18:00"],   // Monday
+    2: ["16:00","17:00"],           // Tuesday
+    3: ["16:00","17:00","18:00"],   // Wednesday
+    4: [],                          // Thursday
+    5: ["15:00","16:00","17:00"],   // Friday
+    6: ["09:00","10:00","11:00"],   // Saturday
+  },
+
+  // 3) How many days ahead to show.
+  daysToShow: 14,
+};
+/* ===========  (no need to edit below this line)  =========== */
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+if (CONFIG.WEB3FORMS_KEY === "YOUR_ACCESS_KEY_HERE") {
+  document.getElementById('setupBanner').classList.add('show');
+}
+
+// Tabs
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.tab).classList.add('active');
+  });
+});
+
+// Build schedule
+const DOW = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fmtTime(hhmm){
+  let [h,m]=hhmm.split(':').map(Number);
+  const ap=h>=12?'PM':'AM'; h=h%12||12;
+  return `${h}:${String(m).padStart(2,'0')} ${ap}`;
+}
+const daysEl=document.getElementById('days');
+const today=new Date(); today.setHours(0,0,0,0);
+for(let i=0;i<CONFIG.daysToShow;i++){
+  const d=new Date(today); d.setDate(today.getDate()+i);
+  const slots=CONFIG.availability[d.getDay()]||[];
+  if(slots.length===0 && i>0) continue; // skip empty days (but always render today)
+  const card=document.createElement('div'); card.className='day';
+  card.innerHTML=`<div class="day-name">${DOW[d.getDay()]}</div>
+                  <div class="day-date">${MON[d.getMonth()]} ${d.getDate()}</div>`;
+  if(slots.length===0){
+    const none=document.createElement('div'); none.className='slot none'; none.textContent='No lessons';
+    card.appendChild(none);
+  } else {
+    slots.forEach(s=>{
+      const label=`${DOW[d.getDay()]}, ${MON[d.getMonth()]} ${d.getDate()} · ${fmtTime(s)}`;
+      const b=document.createElement('button'); b.className='slot'; b.type='button';
+      b.textContent=fmtTime(s);
+      b.addEventListener('click',()=>selectSlot(label));
+      card.appendChild(b);
+    });
+  }
+  daysEl.appendChild(card);
+}
+
+function selectSlot(label){
+  const box=document.getElementById('selectedSlot');
+  box.textContent='Selected: '+label;
+  box.classList.add('show');
+  document.getElementById('bookSlotField').value=label;
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+// Generic submit handler -> Web3Forms
+async function submitForm(form, statusEl, btn, subjectPrefix){
+  const status=document.getElementById(statusEl);
+  const button=document.getElementById(btn);
+  if(CONFIG.WEB3FORMS_KEY==="YOUR_ACCESS_KEY_HERE"){
+    status.className='status err show';
+    status.textContent='Setup needed: add your Web3Forms access key in the CONFIG block to enable email sending.';
+    return;
+  }
+  const data=Object.fromEntries(new FormData(form).entries());
+  data.access_key=CONFIG.WEB3FORMS_KEY;
+  data.subject=subjectPrefix+(data.athlete_name||data.parent_name||'New inquiry');
+  button.disabled=true; button.textContent='Sending…';
+  status.className='status'; status.textContent='';
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(data)
+    });
+    const out=await res.json();
+    if(out.success){
+      status.className='status ok show';
+      status.textContent='✓ Sent! I\u2019ll get back to you by email shortly.';
+      form.reset();
+      document.getElementById('selectedSlot')?.classList.remove('show');
+    } else {
+      throw new Error(out.message||'Send failed');
+    }
+  }catch(e){
+    status.className='status err show';
+    status.textContent='Something went wrong sending that. Please try again, or email me directly.';
+  }finally{
+    button.disabled=false;
+    button.textContent = btn==='bookBtn' ? 'Request this lesson' : 'Send message';
+  }
+}
+
+document.getElementById('bookForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  if(!document.getElementById('bookSlotField').value){
+    const s=document.getElementById('bookStatus');
+    s.className='status err show'; s.textContent='Pick a time slot above first.';
+    return;
+  }
+  submitForm(e.target,'bookStatus','bookBtn','New lesson request — ');
+});
+document.getElementById('contactForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  submitForm(e.target,'contactStatus','contactBtn','New contact message — ');
+});
+</script>
+</body>
+</html>
