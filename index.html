@@ -83,6 +83,28 @@ body{
   white-space:nowrap;
 }
 .nav-cta:hover{background:var(--coral-2);transform:translateY(-1px)}
+.hamburger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:38px;height:38px;border:none;background:none;cursor:pointer;padding:6px;
+  border-radius:9px;transition:background .15s;
+}
+.hamburger:hover{background:rgba(26,61,130,.07)}
+.hamburger span{
+  display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;
+  transition:transform .25s,opacity .25s;transform-origin:center;
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{
+  display:none;position:absolute;top:var(--nav-h);left:0;right:0;
+  background:rgba(244,246,251,.98);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:12px 24px 16px;
+  flex-direction:column;gap:4px;z-index:99;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu .nav-tab{width:100%;text-align:left;font-size:15px;padding:11px 14px}
+.mobile-menu .nav-cta{width:100%;margin-top:8px;padding:12px;font-size:14px;text-align:center}
 
 /* ── HERO ───────────────────────────────────────────────── */
 .hero{
@@ -334,6 +356,8 @@ footer{
 }
 @media(max-width:640px){
   .nav-tabs{display:none}
+  .nav-cta{display:none}
+  .hamburger{display:flex}
   .row{grid-template-columns:1fr}
   .hero{padding:36px 18px 32px}
 }
@@ -355,6 +379,16 @@ footer{
       <button class="nav-tab" data-tab="contact">Contact</button>
     </div>
     <button class="nav-cta" onclick="document.querySelector('[data-tab=book]').click()">Book Now</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="nav-tab" data-tab="book">Book a Lesson</button>
+    <button class="nav-tab" data-tab="skills">Skills Offered</button>
+    <button class="nav-tab" data-tab="about">About Me</button>
+    <button class="nav-tab" data-tab="contact">Contact</button>
+    <button class="nav-cta" onclick="activateTab('book');closeMobileMenu()">Book Now</button>
   </div>
 </nav>
 
@@ -807,7 +841,17 @@ function activateTab(tabName) {
 }
 
 document.querySelectorAll('.nav-tab').forEach(t => {
-  t.addEventListener('click', () => activateTab(t.dataset.tab));
+  t.addEventListener('click', () => { activateTab(t.dataset.tab); closeMobileMenu(); });
+});
+
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
 });
 
 // Date / time dropdowns
