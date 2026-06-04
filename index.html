@@ -460,6 +460,15 @@ footer{
           </div>
         </div>
         <div class="field">
+          <label>Session package <span class="req">*</span></label>
+          <select name="package" required>
+            <option value="">Select…</option>
+            <option value="Single session (1 × 60 min) — $75">Single session (1 × 60 min) — $75</option>
+            <option value="5-session package (5 × 60 min) — $320">5-session package (5 × 60 min) — $320</option>
+            <option value="10-session package (10 × 60 min) — $600">10-session package (10 × 60 min) — $600</option>
+          </select>
+        </div>
+        <div class="field">
           <label>What do you want to work on?</label>
           <textarea name="goals" placeholder="Serving, passing, hitting, confidence, tryout prep…"></textarea>
         </div>
@@ -706,6 +715,10 @@ const CONFIG = {
   //    it just won't email until a real key is in.
   WEB3FORMS_KEY: "ef18158f-962e-45ec-bac0-c529760dc6d1",
 
+  // Paste your Cloudflare Worker URL here after running `wrangler deploy`
+  // e.g. "https://volleyball-lessons-api.YOUR-SUBDOMAIN.workers.dev"
+  WORKER_URL: "",
+
   // 2) Your weekly availability. Use 24h "HH:MM" times.
   //    0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
   //    Add/remove times freely. Empty array = no lessons that day.
@@ -822,43 +835,45 @@ function onTimeChange() {
   document.getElementById('bookSlotField').value = label;
 }
 
-// Generic form submit → Web3Forms
-async function submitForm(form, statusId, btnId, subjectPrefix) {
+// Worker endpoint — set this to your deployed Cloudflare Worker URL after `wrangler deploy`
+const WORKER_URL = CONFIG.WORKER_URL;
+
+async function submitToWorker(endpoint, data, statusId, btnId, successMsg, onSuccess) {
   const status = document.getElementById(statusId);
   const button = document.getElementById(btnId);
-  if (CONFIG.WEB3FORMS_KEY === "YOUR_ACCESS_KEY_HERE") {
+  const originalText = button.textContent;
+
+  if (!WORKER_URL) {
     status.className = 'status err show';
-    status.textContent = 'Setup needed: add your Web3Forms access key in the CONFIG block to enable email sending.';
+    status.textContent = 'Setup needed: add your Worker URL to the CONFIG block.';
     return;
   }
-  const data = Object.fromEntries(new FormData(form).entries());
-  data.access_key = CONFIG.WEB3FORMS_KEY;
-  data.subject = subjectPrefix + (data.athlete_name || data.parent_name || 'New inquiry');
-  button.disabled = true; button.textContent = 'Sending…';
-  status.className = 'status'; status.textContent = '';
+
+  button.disabled = true;
+  button.textContent = 'Sending…';
+  status.className = 'status';
+  status.textContent = '';
+
   try {
-    const res = await fetch('https://api.web3forms.com/submit', {
+    const res = await fetch(WORKER_URL + endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(data)
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     });
     const out = await res.json();
     if (out.success) {
       status.className = 'status ok show';
-      status.textContent = '✓ Sent! I\'ll get back to you by email shortly.';
-      form.reset();
-      document.getElementById('dateSelect').value = '';
-      onDateChange();
-      document.getElementById('selectedSlot').classList.remove('show');
+      status.textContent = successMsg;
+      if (onSuccess) onSuccess();
     } else {
-      throw new Error(out.message || 'Send failed');
+      throw new Error(out.error || 'Send failed');
     }
-  } catch(e) {
+  } catch (e) {
     status.className = 'status err show';
-    status.textContent = 'Something went wrong sending that. Please try again, or email me directly.';
+    status.textContent = 'Something went wrong. Please try again, or email me directly.';
   } finally {
     button.disabled = false;
-    button.textContent = btnId === 'bookBtn' ? 'Request this lesson →' : 'Send message →';
+    button.textContent = originalText;
   }
 }
 
@@ -870,12 +885,32 @@ document.getElementById('bookForm').addEventListener('submit', e => {
     s.textContent = 'Please select a date and time first.';
     return;
   }
-  submitForm(e.target, 'bookStatus', 'bookBtn', 'New lesson request — ');
+  const data = Object.fromEntries(new FormData(e.target).entries());
+  submitToWorker(
+    '/submit-booking',
+    data,
+    'bookStatus',
+    'bookBtn',
+    '✓ Sent! I\'ll review your info and follow up by email to confirm. A personalized practice plan is on its way to me now.',
+    () => {
+      e.target.reset();
+      document.getElementById('dateSelect').value = '';
+      onDateChange();
+      document.getElementById('selectedSlot').classList.remove('show');
+    }
+  );
 });
 
 document.getElementById('contactForm').addEventListener('submit', e => {
   e.preventDefault();
-  submitForm(e.target, 'contactStatus', 'contactBtn', 'New contact message — ');
+  const data = Object.fromEntries(new FormData(e.target).entries());
+  submitToWorker(
+    '/submit-contact',
+    data,
+    'contactStatus',
+    'contactBtn',
+    '✓ Sent! I usually respond within a few hours.'
+  );
 });
 </script>
 </body>
