@@ -184,6 +184,7 @@ async function sendEmail(env, fields) {
 function packageToSessions(pkg) {
   if (pkg?.includes('10')) return 10;
   if (pkg?.includes('5')) return 5;
+  if (pkg?.includes('3')) return 3;
   return 1;
 }
 
