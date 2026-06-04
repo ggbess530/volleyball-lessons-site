@@ -3,27 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Private Volleyball Lessons</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Garrett Bess Volleyball</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    ⚙️  SETUP — EDIT THESE TWO THINGS, THEN YOU'RE DONE
-   1. Get a free access key at https://web3forms.com (takes 30 sec,
+   1. Get a free access key at https://web3forms.com (30 sec —
       just enter the email you want notifications sent to).
    2. Paste the key + your details in the CONFIG block in the
       <script> at the very bottom of this file.
    ============================================================ */
 :root{
-  --sand:#f4ece0;
-  --sand-2:#ece0cd;
-  --ink:#1f2a2e;
-  --court:#0f5f57;       /* deep court teal-green */
-  --court-2:#13776c;
-  --coral:#ec6a45;       /* volleyball accent */
-  --coral-2:#f5895f;
-  --line:rgba(31,42,46,.14);
-  --card:#fffaf2;
-  --shadow:0 18px 40px -22px rgba(15,95,87,.45);
+  --sand:#f4f6fb;
+  --sand-2:#e6eaf5;
+  --ink:#0d1f3c;
+  --court:#1a3d82;
+  --court-2:#2452aa;
+  --court-light:rgba(26,61,130,.08);
+  --gold:#c8920e;
+  --gold-2:#dba216;
+  --coral:#c8920e;
+  --coral-2:#dba216;
+  --line:rgba(13,31,60,.13);
+  --card:#ffffff;
+  --shadow:0 20px 48px -20px rgba(26,61,130,.35);
+  --shadow-sm:0 6px 20px -8px rgba(26,61,130,.22);
+  --nav-h:66px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -33,94 +38,146 @@ body{
   color:var(--ink);
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
-  background-image:radial-gradient(circle at 12% 8%,rgba(236,106,69,.07),transparent 45%),
-                   radial-gradient(circle at 88% 92%,rgba(15,95,87,.08),transparent 45%);
 }
-.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
 
-/* HEADER */
-header{padding:30px 0 10px}
-.brand{display:flex;align-items:center;gap:14px}
+/* ── STICKY NAV ─────────────────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(244,246,251,.95);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  height:var(--nav-h);
+}
+.nav-inner{
+  max-width:1060px;margin:0 auto;padding:0 24px;
+  height:100%;display:flex;align-items:center;justify-content:space-between;
+}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
 .ball{
-  width:46px;height:46px;border-radius:50%;flex:none;
+  width:40px;height:40px;border-radius:50%;flex:none;
   background:var(--court);position:relative;overflow:hidden;
-  box-shadow:inset 0 0 0 3px rgba(255,255,255,.25);
+  box-shadow:inset 0 0 0 2.5px rgba(255,255,255,.3);
 }
 .ball::before,.ball::after{
   content:'';position:absolute;border-radius:50%;
-  border:2px solid rgba(255,255,255,.55);
+  border:2px solid rgba(255,255,255,.5);
 }
-.ball::before{inset:-22px -8px auto auto;width:46px;height:46px}
-.ball::after{inset:auto auto -22px -10px;width:46px;height:46px}
-.brand-name{font-family:'Fraunces',serif;font-weight:900;font-size:22px;letter-spacing:-.01em}
+.ball::before{inset:-18px -6px auto auto;width:42px;height:42px}
+.ball::after{inset:auto auto -18px -8px;width:42px;height:42px}
+.brand-name{font-family:'Fraunces',serif;font-weight:900;font-size:19px;letter-spacing:-.01em}
 .brand-name span{color:var(--coral)}
+.nav-tabs{display:flex;gap:2px}
+.nav-tab{
+  font-family:'Outfit',sans-serif;font-weight:600;font-size:14px;
+  padding:8px 16px;border:none;background:none;cursor:pointer;
+  color:#6a7a76;border-radius:9px;transition:all .15s;white-space:nowrap;
+}
+.nav-tab:hover{color:var(--ink);background:rgba(26,61,130,.07)}
+.nav-tab.active{color:var(--court);background:var(--court-light)}
+.nav-cta{
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;
+  padding:9px 18px;border:none;border-radius:10px;cursor:pointer;
+  background:var(--coral);color:#fff;transition:all .16s;
+  box-shadow:0 4px 14px -6px rgba(232,87,42,.6);
+  white-space:nowrap;
+}
+.nav-cta:hover{background:var(--coral-2);transform:translateY(-1px)}
 
-/* HERO */
-.hero{padding:42px 0 30px;position:relative}
+/* ── HERO ───────────────────────────────────────────────── */
+.hero{
+  max-width:1060px;margin:0 auto;padding:62px 24px 48px;
+  display:grid;grid-template-columns:1fr 420px;gap:56px;align-items:center;
+}
 .eyebrow{
-  font-size:12px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--court);font-weight:600;margin-bottom:16px;
+  font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--court);font-weight:700;margin-bottom:18px;
   display:flex;align-items:center;gap:10px;
 }
-.eyebrow::before{content:'';width:26px;height:2px;background:var(--coral)}
+.eyebrow::before{content:'';width:22px;height:2.5px;background:var(--gold);border-radius:2px}
 .hero h1{
   font-family:'Fraunces',serif;font-weight:900;
-  font-size:clamp(40px,6.5vw,72px);line-height:.98;letter-spacing:-.02em;
-  max-width:14ch;
+  font-size:clamp(38px,5.8vw,68px);line-height:.97;letter-spacing:-.025em;
 }
 .hero h1 em{font-style:italic;color:var(--coral)}
-.hero p{font-size:18px;max-width:52ch;margin-top:20px;color:#41504f}
-.hero-meta{display:flex;flex-wrap:wrap;gap:26px;margin-top:28px}
-.hero-meta div{font-size:14px}
-.hero-meta b{display:block;font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--court)}
-
-/* TABS */
-.tabs{display:flex;gap:8px;margin:38px 0 0;border-bottom:2px solid var(--line)}
-.tab{
+.hero-sub{font-size:17px;max-width:48ch;margin-top:20px;color:#4a5a57;line-height:1.6}
+.hero-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.chip{
+  display:flex;align-items:center;gap:7px;
+  background:#fff;border:1px solid var(--line);border-radius:50px;
+  padding:7px 14px;font-size:13px;font-weight:600;color:#3a4a47;
+  box-shadow:var(--shadow-sm);
+}
+.chip svg{width:15px;height:15px;flex:none;color:var(--court)}
+.hero-actions{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.btn-primary{
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;
+  padding:14px 28px;border:none;border-radius:12px;cursor:pointer;
+  background:var(--coral);color:#fff;transition:all .17s;
+  box-shadow:0 10px 24px -10px rgba(232,87,42,.65);
+}
+.btn-primary:hover{background:var(--coral-2);transform:translateY(-2px)}
+.btn-secondary{
   font-family:'Outfit',sans-serif;font-weight:600;font-size:15px;
-  padding:14px 22px;border:none;background:none;cursor:pointer;
-  color:#7a857f;position:relative;transition:color .18s;
+  padding:14px 24px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;
+  background:#fff;color:var(--ink);transition:all .17s;
 }
-.tab:hover{color:var(--ink)}
-.tab.active{color:var(--court)}
-.tab.active::after{
-  content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--court);
+.btn-secondary:hover{border-color:var(--court);color:var(--court)}
+
+/* hero stat card */
+.hero-card{
+  background:var(--court);color:#fff;border-radius:24px;
+  padding:32px 28px;box-shadow:var(--shadow);
 }
-.panel{display:none;padding:34px 0 70px;animation:rise .45s ease}
+.hcard-title{font-size:12px;letter-spacing:.18em;text-transform:uppercase;opacity:.7;margin-bottom:20px}
+.hcard-stats{display:flex;flex-direction:column;gap:0}
+.hstat{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.14);display:flex;align-items:baseline;gap:14px}
+.hstat:last-child{border-bottom:none}
+.hstat-num{font-family:'Fraunces',serif;font-weight:900;font-size:36px;line-height:1;color:#fff}
+.hstat-num sup{font-size:18px;vertical-align:super}
+.hstat-label{font-size:14px;opacity:.8;line-height:1.35}
+.hcard-badge{
+  margin-top:20px;background:rgba(255,255,255,.12);border-radius:12px;
+  padding:12px 16px;font-size:13px;opacity:.9;line-height:1.45;
+}
+.hcard-badge strong{display:block;font-size:15px;opacity:1;margin-bottom:2px}
+
+/* ── TABS CONTENT AREA ──────────────────────────────────── */
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+.panel{display:none;padding:38px 0 80px;animation:rise .4s ease}
 .panel.active{display:block}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-/* SCHEDULE */
-.section-h{font-family:'Fraunces',serif;font-size:28px;font-weight:700;margin-bottom:6px}
-.section-sub{color:#5a6664;margin-bottom:26px;max-width:60ch}
-.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
-.day{
-  background:var(--card);border:1px solid var(--line);border-radius:18px;
-  padding:18px;box-shadow:var(--shadow);
+/* ── SETUP BANNER ────────────────────────────────────────── */
+.setup-banner{
+  background:#fff8e1;border:1px solid #f0d060;color:#6b5000;
+  border-radius:12px;padding:12px 16px;font-size:13px;
+  margin:0 0 32px;display:none;
 }
-.day-name{font-family:'Fraunces',serif;font-weight:700;font-size:17px}
-.day-date{font-size:13px;color:#8a948f;margin-bottom:14px}
-.slot{
-  display:block;width:100%;text-align:left;border:1px solid var(--line);
-  background:var(--sand);border-radius:11px;padding:10px 13px;margin-bottom:8px;
-  font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;color:var(--ink);
-  cursor:pointer;transition:all .15s;
-}
-.slot:hover{border-color:var(--court);background:#fff;transform:translateX(3px)}
-.slot.none{opacity:.5;cursor:default;background:transparent;font-style:italic}
-.slot.none:hover{transform:none;border-color:var(--line)}
+.setup-banner.show{display:block}
 
-/* FORM */
+/* ── SECTION HEADINGS ───────────────────────────────────── */
+.section-h{font-family:'Fraunces',serif;font-size:30px;font-weight:700;margin-bottom:6px}
+.section-sub{color:#5a6a66;margin-bottom:28px;max-width:62ch;font-size:16px}
+
+/* ── SCHEDULE DROPDOWNS ──────────────────────────────────── */
+.datetime-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  margin-bottom:28px;max-width:520px;
+}
+@media(max-width:480px){.datetime-row{grid-template-columns:1fr}}
+
+/* form card */
 .form-card{
   background:var(--card);border:1px solid var(--line);border-radius:22px;
-  padding:30px;max-width:600px;box-shadow:var(--shadow);
+  padding:32px;max-width:620px;box-shadow:var(--shadow);
 }
 .field{margin-bottom:18px}
-.field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px;letter-spacing:.01em}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px;letter-spacing:.01em;color:#2a3a38}
 .field .req{color:var(--coral)}
 .field input,.field select,.field textarea{
   width:100%;font-family:'Outfit',sans-serif;font-size:15px;color:var(--ink);
-  background:var(--sand);border:1px solid var(--line);border-radius:12px;
+  background:var(--sand);border:1.5px solid var(--line);border-radius:12px;
   padding:13px 15px;transition:border-color .15s,background .15s;
 }
 .field input:focus,.field select:focus,.field textarea:focus{
@@ -129,96 +186,239 @@ header{padding:30px 0 10px}
 .field textarea{resize:vertical;min-height:120px}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .selected-slot{
-  background:rgba(15,95,87,.08);border:1px dashed var(--court);border-radius:12px;
-  padding:13px 15px;font-size:14px;font-weight:500;color:var(--court);margin-bottom:18px;
+  background:rgba(10,92,84,.08);border:1.5px dashed var(--court);border-radius:12px;
+  padding:13px 15px;font-size:14px;font-weight:600;color:var(--court);margin-bottom:18px;
   display:none;
 }
 .selected-slot.show{display:block}
 .btn{
-  font-family:'Outfit',sans-serif;font-weight:600;font-size:16px;
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;
   background:var(--coral);color:#fff;border:none;border-radius:13px;
-  padding:15px 30px;cursor:pointer;transition:all .18s;width:100%;
-  box-shadow:0 10px 22px -10px rgba(236,106,69,.7);
+  padding:15px 30px;cursor:pointer;transition:all .17s;width:100%;
+  box-shadow:0 10px 24px -10px rgba(232,87,42,.65);
 }
 .btn:hover{background:var(--coral-2);transform:translateY(-1px)}
-.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
-.note{font-size:12.5px;color:#8a948f;margin-top:14px;line-height:1.5}
-.status{margin-top:16px;font-size:14px;font-weight:500;display:none}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.note{font-size:12.5px;color:#8a9890;margin-top:14px;line-height:1.5}
+.status{margin-top:16px;font-size:14px;font-weight:600;display:none}
 .status.show{display:block}
 .status.ok{color:var(--court)}
 .status.err{color:#c0392b}
 
-/* SETUP BANNER */
-.setup-banner{
-  background:#fff3cd;border:1px solid #e0c976;color:#6b5400;
-  border-radius:12px;padding:12px 16px;font-size:13px;margin:20px 0 0;display:none;
+/* ── SKILLS ──────────────────────────────────────────────── */
+.skills-intro{
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;
+  align-items:start;margin-bottom:48px;
 }
-.setup-banner.show{display:block}
+.skills-intro-text{max-width:48ch}
+.pricing-callout{
+  background:var(--court);color:#fff;border-radius:22px;padding:28px;
+  box-shadow:var(--shadow);
+}
+.pricing-callout h3{font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-bottom:16px}
+.price-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:11px 0;border-bottom:1px solid rgba(255,255,255,.15);font-size:15px;
+}
+.price-row:last-of-type{border-bottom:none}
+.price-row .price{font-family:'Fraunces',serif;font-size:22px;font-weight:700}
+.price-row .label{opacity:.85}
+.pricing-note{font-size:12px;opacity:.65;margin-top:12px;line-height:1.5}
+.skills-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(286px,1fr));
+  gap:20px;
+}
+.skill-card{
+  background:var(--card);border:1px solid var(--line);border-radius:20px;
+  padding:26px;box-shadow:var(--shadow-sm);transition:transform .17s,box-shadow .17s;
+  display:flex;flex-direction:column;gap:12px;
+}
+.skill-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.skill-icon{
+  width:48px;height:48px;border-radius:14px;background:var(--court-light);
+  display:flex;align-items:center;justify-content:center;flex:none;
+  font-size:22px;
+}
+.skill-name{font-family:'Fraunces',serif;font-weight:700;font-size:19px}
+.skill-desc{font-size:14px;color:#4a5a57;line-height:1.55}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:4px}
+.tag{
+  font-size:12px;font-weight:600;padding:4px 10px;border-radius:50px;
+  background:var(--court-light);color:var(--court);
+}
 
-/* ABOUT */
-.about-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:38px;align-items:start}
-.about-lead{font-size:19px;color:#41504f;margin:4px 0 28px;line-height:1.55;max-width:55ch}
-.about-h{font-family:'Fraunces',serif;font-weight:700;font-size:20px;margin:26px 0 8px;color:var(--court)}
-.about-p{color:#4a5957;max-width:62ch}
-.about-side{position:sticky;top:24px}
+/* ── ABOUT ───────────────────────────────────────────────── */
+.about-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:44px;align-items:start}
+.about-lead{font-size:18px;color:#41504f;margin:6px 0 28px;line-height:1.6;max-width:52ch}
+.about-h{font-family:'Fraunces',serif;font-weight:700;font-size:19px;margin:26px 0 8px;color:var(--court)}
+.about-p{color:#4a5957;max-width:62ch;font-size:15px;line-height:1.65}
+.about-side{position:sticky;top:calc(var(--nav-h) + 18px)}
 .stat-card{
-  background:var(--court);color:#fff;border-radius:20px;padding:24px;box-shadow:var(--shadow);
+  background:var(--court);color:#fff;border-radius:22px;padding:26px;box-shadow:var(--shadow);
+  margin-bottom:16px;
 }
-.stat-row{display:flex;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.16)}
+.stat-row{display:flex;align-items:baseline;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.14)}
 .stat-row:last-child{border-bottom:none}
-.stat-num{font-family:'Fraunces',serif;font-weight:900;font-size:30px;min-width:64px}
+.stat-num{font-family:'Fraunces',serif;font-weight:900;font-size:32px;min-width:68px}
 .stat-label{font-size:14px;opacity:.85}
-.cred-list{list-style:none;margin:18px 0 0;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;box-shadow:var(--shadow)}
-.cred-list li{font-size:14px;padding:8px 0;border-bottom:1px solid var(--line);color:#41504f}
+.cred-list{
+  list-style:none;background:var(--card);border:1px solid var(--line);
+  border-radius:18px;padding:18px 20px;box-shadow:var(--shadow-sm);
+}
+.cred-list li{
+  font-size:14px;padding:8px 0;border-bottom:1px solid var(--line);
+  color:#41504f;display:flex;align-items:center;gap:8px;
+}
 .cred-list li:last-child{border-bottom:none}
-.about-cta{margin-top:18px}
-@media(max-width:760px){.about-grid{grid-template-columns:1fr}.about-side{position:static}}
+.cred-list li::before{content:'✓';color:var(--court);font-weight:700;flex:none}
+.about-cta{margin-top:16px;display:flex;flex-direction:column;gap:10px}
 
-footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:#8a948f}
-@media(max-width:560px){.row{grid-template-columns:1fr}}
+/* ── CONTACT ─────────────────────────────────────────────── */
+.contact-wrap{display:grid;grid-template-columns:1fr 380px;gap:44px;align-items:start}
+.contact-info h3{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--court);margin:28px 0 8px}
+.contact-info h3:first-child{margin-top:0}
+.contact-info p{font-size:15px;color:#4a5a57;line-height:1.6}
+.contact-block{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:22px;box-shadow:var(--shadow-sm);
+}
+.contact-block h4{font-family:'Fraunces',serif;font-size:17px;font-weight:700;margin-bottom:14px}
+.contact-item{
+  display:flex;align-items:center;gap:10px;
+  font-size:14px;color:#4a5a57;padding:9px 0;border-bottom:1px solid var(--line);
+}
+.contact-item:last-child{border-bottom:none}
+.contact-item svg{width:16px;height:16px;flex:none;color:var(--court)}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+footer{
+  border-top:1px solid var(--line);padding:28px 0;
+  font-size:13px;color:#8a9890;
+  background:rgba(255,252,246,.7);
+}
+.footer-inner{
+  max-width:1060px;margin:0 auto;padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;gap:32px}
+  .hero-card{max-width:100%}
+  .hcard-stats{flex-direction:row;flex-wrap:wrap;gap:0}
+  .hstat{padding:10px 16px 10px 0;border-bottom:none;border-right:1px solid rgba(255,255,255,.14)}
+  .hstat:last-child{border-right:none}
+  .about-grid,.contact-wrap{grid-template-columns:1fr}
+  .about-side{position:static}
+  .skills-intro{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .nav-tabs{display:none}
+  .row{grid-template-columns:1fr}
+  .hero{padding:36px 18px 32px}
+}
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <header>
-    <div class="brand">
+<!-- ══ NAV ══════════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#">
       <div class="ball"></div>
-      <div class="brand-name">Set &amp; <span>Spike</span> — Private Volleyball</div>
+      <div class="brand-name">Garrett Bess <span>Volleyball</span></div>
+    </a>
+    <div class="nav-tabs" id="navTabs">
+      <button class="nav-tab active" data-tab="book">Book a Lesson</button>
+      <button class="nav-tab" data-tab="skills">Skills Offered</button>
+      <button class="nav-tab" data-tab="about">About Me</button>
+      <button class="nav-tab" data-tab="contact">Contact</button>
     </div>
-  </header>
+    <button class="nav-cta" onclick="document.querySelector('[data-tab=book]').click()">Book Now</button>
+  </div>
+</nav>
 
-  <section class="hero">
-    <div class="eyebrow">One-on-one coaching</div>
-    <h1>Private volleyball lessons that <em>actually</em> move the needle.</h1>
-    <p>Personalized one-on-one coaching for young players — serving, passing, setting, hitting, and court IQ. Pick a time that works, tell me about your athlete, and we'll get to work.</p>
-    <div class="hero-meta">
-      <div><b>1:1</b>Individual focus</div>
-      <div><b>Ages 8–18</b>All skill levels</div>
-      <div><b>60 min</b>Per session</div>
+<!-- ══ HERO ══════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">Private 1-on-1 Coaching</div>
+    <h1>Volleyball lessons that <em>actually</em> move the needle.</h1>
+    <p class="hero-sub">Personalized one-on-one training for players at every level — from first touch to competitive club prep. Real fundamentals, real reps, real results.</p>
+    <div class="hero-chips">
+      <div class="chip">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
+        1-on-1 Focus
+      </div>
+      <div class="chip">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        60-Min Sessions
+      </div>
+      <div class="chip">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        All Skill Levels
+      </div>
+      <div class="chip">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Ages 8–18
+      </div>
+    </div>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.querySelector('[data-tab=book]').click()">Book a Lesson</button>
+      <button class="btn-secondary" onclick="document.querySelector('[data-tab=skills]').click()">See Skills Offered</button>
     </div>
     <div class="setup-banner" id="setupBanner">
-      ⚙️ <b>Setup not finished:</b> add your free Web3Forms access key in the CONFIG block at the bottom of this file so booking + contact emails reach you.
+      ⚙️ <b>Setup not finished:</b> paste your Web3Forms access key in the CONFIG block at the bottom of this file so booking + contact emails reach you.
     </div>
-  </section>
-
-  <div class="tabs">
-    <button class="tab active" data-tab="book">Book a Lesson</button>
-    <button class="tab" data-tab="about">About Me</button>
-    <button class="tab" data-tab="contact">Contact</button>
   </div>
+  <div class="hero-card">
+    <div class="hcard-title">By the numbers</div>
+    <div class="hcard-stats">
+      <div class="hstat">
+        <div class="hstat-num">10<sup>+</sup></div>
+        <div class="hstat-label">Years of playing<br>experience</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-num">5<sup>+</sup></div>
+        <div class="hstat-label">Years coaching<br>athletes</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-num">100<sup>+</sup></div>
+        <div class="hstat-label">Players trained<br>one-on-one</div>
+      </div>
+    </div>
+    <div class="hcard-badge">
+      <strong>First lesson guarantee</strong>
+      Not sure it's the right fit? First session is risk-free — no pressure, no long-term commitment needed.
+    </div>
+  </div>
+</section>
 
-  <!-- ============ BOOK TAB ============ -->
+<!-- ══ TAB PANELS ════════════════════════════════════════════ -->
+<div class="wrap">
+
+  <!-- ══ BOOK ══════════════════════════════════════════════ -->
   <section class="panel active" id="book">
     <h2 class="section-h">Pick a time</h2>
-    <p class="section-sub">Here's my availability for the next two weeks. Tap a slot to request it — I'll confirm by email, usually same day. (Slots are first-come; booking sends me a request so we lock it in together.)</p>
-    <div class="days" id="days"></div>
-
-    <div style="height:34px"></div>
+    <p class="section-sub">Choose a date and time from the dropdowns below, then fill in your details and send.</p>
 
     <div class="form-card">
       <h2 class="section-h" style="font-size:22px">Your booking details</h2>
-      <p class="section-sub" style="margin-bottom:22px">Once you've picked a slot above, fill this in and send.</p>
+
+      <div class="datetime-row">
+        <div class="field" style="margin-bottom:0">
+          <label>Date <span class="req">*</span></label>
+          <select id="dateSelect" onchange="onDateChange()">
+            <option value="">Select a date…</option>
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Time <span class="req">*</span></label>
+          <select id="timeSelect" onchange="onTimeChange()" disabled>
+            <option value="">Select a date first…</option>
+          </select>
+        </div>
+      </div>
 
       <div class="selected-slot" id="selectedSlot"></div>
 
@@ -226,17 +426,17 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:#8a9
         <div class="row">
           <div class="field">
             <label>Your name <span class="req">*</span></label>
-            <input type="text" name="parent_name" required>
+            <input type="text" name="parent_name" placeholder="Parent / guardian" required>
           </div>
           <div class="field">
             <label>Your email <span class="req">*</span></label>
-            <input type="email" name="email" required>
+            <input type="email" name="email" placeholder="you@example.com" required>
           </div>
         </div>
         <div class="row">
           <div class="field">
             <label>Phone</label>
-            <input type="tel" name="phone">
+            <input type="tel" name="phone" placeholder="(555) 000-0000">
           </div>
           <div class="field">
             <label>Athlete's name <span class="req">*</span></label>
@@ -264,109 +464,237 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:#8a9
           <textarea name="goals" placeholder="Serving, passing, hitting, confidence, tryout prep…"></textarea>
         </div>
         <input type="hidden" name="selected_time" id="bookSlotField">
-        <button type="submit" class="btn" id="bookBtn">Request this lesson</button>
+        <button type="submit" class="btn" id="bookBtn">Request this lesson →</button>
         <div class="status" id="bookStatus"></div>
-        <p class="note">Booking sends me an email request with these details. I'll reply to confirm the time. No payment is taken here.</p>
+        <p class="note">This sends me an email with your details. I'll reply to confirm the time. No payment is collected here — we settle that before the first session.</p>
       </form>
     </div>
   </section>
 
-  <!-- ============ ABOUT TAB ============ -->
+  <!-- ══ SKILLS ════════════════════════════════════════════ -->
+  <section class="panel" id="skills">
+    <h2 class="section-h">Skills Offered</h2>
+    <p class="section-sub">Every session is tailored to your athlete's needs. Here's what I can help with — from raw beginners learning the basics to competitive players sharpening their edge.</p>
+
+    <div class="skills-intro">
+      <div class="skills-intro-text">
+        <p style="font-size:16px;color:#4a5a57;line-height:1.65;margin-bottom:16px">
+          Sessions are 60 minutes and structured around focused reps — not just drills for the sake of drills. We identify the one or two things that will move the needle most and build from there.
+        </p>
+        <p style="font-size:16px;color:#4a5a57;line-height:1.65">
+          Whether your athlete is preparing for middle school tryouts or grinding toward a D1 offer, I meet them where they are and push them to the next level.
+        </p>
+      </div>
+      <div class="pricing-callout">
+        <h3>Session Pricing</h3>
+        <div class="price-row"><span class="label">Single session (60 min)</span><span class="price">$75</span></div>
+        <div class="price-row"><span class="label">5-session package</span><span class="price">$320</span></div>
+        <div class="price-row"><span class="label">10-session package</span><span class="price">$600</span></div>
+        <p class="pricing-note">Package sessions never expire. Payment accepted via Venmo, cash, or card before first session.</p>
+        <button class="btn" style="margin-top:18px;padding:12px;font-size:14px" onclick="document.querySelector('[data-tab=book]').click()">Book a session</button>
+      </div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">🏐</div>
+        <div class="skill-name">Serving</div>
+        <p class="skill-desc">Float serves, jump serves, and topspin mechanics. We build consistency first, then add weapon-level pace and placement to keep defenders guessing.</p>
+        <div class="skill-tags">
+          <span class="tag">Float</span>
+          <span class="tag">Jump serve</span>
+          <span class="tag">Placement</span>
+          <span class="tag">Consistency</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🙌</div>
+        <div class="skill-name">Passing &amp; Serve Receive</div>
+        <p class="skill-desc">Arm platform, body angles, and reading the server. We drill the reps that build muscle memory so passing holds up when the match is on the line.</p>
+        <div class="skill-tags">
+          <span class="tag">Platform</span>
+          <span class="tag">Serve receive</span>
+          <span class="tag">Footwork</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🤲</div>
+        <div class="skill-name">Setting</div>
+        <p class="skill-desc">Hand shape, release timing, and decision-making in transition. From learning hand sets for the first time to running an offense with quick tempos.</p>
+        <div class="skill-tags">
+          <span class="tag">Hand sets</span>
+          <span class="tag">Back sets</span>
+          <span class="tag">Quick offense</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">💥</div>
+        <div class="skill-name">Attacking &amp; Hitting</div>
+        <p class="skill-desc">Approach footwork, arm swing mechanics, and reading the block. We work line, angle, cut-shot, and roll shot so attackers have a full toolbox.</p>
+        <div class="skill-tags">
+          <span class="tag">Approach</span>
+          <span class="tag">Arm swing</span>
+          <span class="tag">Toolbox shots</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🛡️</div>
+        <div class="skill-name">Blocking</div>
+        <p class="skill-desc">Footwork patterns, timing, hand penetration, and reading hitter tendencies. Whether single or double blocking, build the instincts to close the net.</p>
+        <div class="skill-tags">
+          <span class="tag">Footwork</span>
+          <span class="tag">Timing</span>
+          <span class="tag">Penetration</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⚡</div>
+        <div class="skill-name">Defense &amp; Digging</div>
+        <p class="skill-desc">Ready position, lateral movement, and platform control under pressure. Learn to read hitters early and get behind the ball before it's too late.</p>
+        <div class="skill-tags">
+          <span class="tag">Read defense</span>
+          <span class="tag">Lateral speed</span>
+          <span class="tag">Reaction</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🧠</div>
+        <div class="skill-name">Court IQ &amp; Decision Making</div>
+        <p class="skill-desc">Pattern recognition, communication, and knowing what to do before the ball arrives. Great athletes think one step ahead — we train that habit.</p>
+        <div class="skill-tags">
+          <span class="tag">Game sense</span>
+          <span class="tag">Communication</span>
+          <span class="tag">Patterns</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🏆</div>
+        <div class="skill-name">Tryout Prep</div>
+        <p class="skill-desc">Middle school, high school varsity, club — we zero in on the specific skills evaluators look for and build the confidence to perform under pressure.</p>
+        <div class="skill-tags">
+          <span class="tag">School tryouts</span>
+          <span class="tag">Club eval</span>
+          <span class="tag">Confidence</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ABOUT ══════════════════════════════════════════════ -->
   <section class="panel" id="about">
-    <!-- ⚙️ EDIT EVERYTHING IN THIS TAB WITH YOUR OWN INFO -->
     <div class="about-grid">
       <div class="about-main">
-        <h2 class="section-h">Hi, I'm [Your Name]</h2>
-        <p class="about-lead">[One or two sentences on who you are and your coaching philosophy — e.g. "I've spent the last decade playing and coaching volleyball, and I love helping young players fall for the game the way I did."]</p>
+        <h2 class="section-h">Hi, I'm Garrett Bess</h2>
+        <p class="about-lead">After nearly a decade competing at the high school, collegiate, and international levels, I turned my passion for volleyball into a coaching career built on one principle: develop the whole player, not just the skill.</p>
 
         <h3 class="about-h">Playing experience</h3>
-        <p class="about-p">[Where and how long you've played — high school varsity, college program, club, beach, adult leagues. Include positions you played and any standout achievements: championships, all-conference honors, captaincy, etc.]</p>
+        <p class="about-p">My competitive career began at Brownsburg High School (2016–2019) before continuing at Indiana University, where I competed with the IU Club Volleyball program and served as a practice player for the IU Women's Volleyball team (2019–2023). I then took my game international, spending the 2023–2024 season competing for Orkelljunga Volleyball Club in Sweden — an experience that sharpened my understanding of high-level systems and exposed me to coaching philosophies from across the world.</p>
 
         <h3 class="about-h">Coaching experience</h3>
-        <p class="about-p">[Who you've coached and for how long — club teams, camps, school programs, private lessons. Mention age groups and skill levels you work with best.]</p>
+        <p class="about-p">Over the past five years, I've coached at camps, clinics, and club programs across the globe — working with every age group from elementary-age beginners picking up a ball for the first time to competitive collegiate-level athletes refining advanced skills. I've had the privilege of learning alongside some of the best coaches in the game, absorbing a wide range of technical approaches and systems that I bring directly into every private session.</p>
 
         <h3 class="about-h">Certifications &amp; training</h3>
-        <p class="about-p">[Any coaching certifications, safety/first-aid training, background checks, or clinics you've completed. Parents look for this — list whatever you have.]</p>
+        <p class="about-p">Gold Medal Squared Certified &nbsp;·&nbsp; USA Volleyball Coaching Certified &nbsp;·&nbsp; SafeSport Certified &nbsp;·&nbsp; JVA Safety Certified</p>
 
         <h3 class="about-h">My approach</h3>
-        <p class="about-p">[What a lesson with you looks like and what makes it different — fundamentals first, positive reinforcement, video breakdown, tryout prep, building confidence, etc.]</p>
+        <p class="about-p" style="margin-bottom:14px">Every athlete I work with starts from the same place: the fundamentals. Great volleyball isn't built on highlight plays — it's built on a platform that's consistently in the right position, a serve that holds up under pressure, and footwork patterns that become automatic under stress. We don't skip steps. We build the foundation correctly, then add layers on top of it.</p>
+        <p class="about-p" style="margin-bottom:14px">Technical training alone isn't enough, though. I've worked with enough athletes to know that the mental side of the game is just as important as the physical. We work on staying composed through mistakes, building confidence through purposeful repetition, and developing the kind of presence that shows up when it matters most — tryouts, tournament play, and clutch moments.</p>
+        <p class="about-p">Private lessons give us something team practice rarely affords: dedicated time. Time to slow down and fix the small things, time to drill the specific skill holding your athlete back, and time to ask questions without the pace of a team environment. Every session is tailored to where your athlete is right now and where they want to be. Whether we're preparing a freshman for her first high school tryout or helping a club athlete push for a college roster spot, the approach is the same — show up, work smart, and build something that lasts.</p>
       </div>
 
       <aside class="about-side">
         <div class="stat-card">
-          <div class="stat-row"><span class="stat-num">10+</span><span class="stat-label">Years playing</span></div>
-          <div class="stat-row"><span class="stat-num">5+</span><span class="stat-label">Years coaching</span></div>
-          <div class="stat-row"><span class="stat-num">100+</span><span class="stat-label">Athletes coached</span></div>
+          <div class="stat-row"><span class="stat-num">8+</span><span class="stat-label">Years playing at HS, collegiate &amp; international levels</span></div>
+          <div class="stat-row"><span class="stat-num">5+</span><span class="stat-label">Years coaching camps, clinics &amp; club programs</span></div>
+          <div class="stat-row"><span class="stat-num">200+</span><span class="stat-label">Athletes coached across all age groups</span></div>
         </div>
         <ul class="cred-list">
-          <li>Positions: [Setter / Outside / Libero…]</li>
-          <li>Specialties: [Serving, passing, hitting…]</li>
-          <li>Ages: 8–18, all skill levels</li>
-          <li>Location: [Where lessons happen]</li>
+          <li>Gold Medal Squared Certified</li>
+          <li>USA Volleyball Coaching Certified</li>
+          <li>SafeSport Certified</li>
+          <li>JVA Safety Certified</li>
+          <li>International playing experience (Sweden)</li>
+          <li>Ages 8–18, all skill levels welcome</li>
+          <li>Location: The Sportzone, Indianapolis</li>
         </ul>
-        <button class="btn about-cta" type="button" onclick="document.querySelector('[data-tab=book]').click()">Book a lesson</button>
+        <div class="about-cta">
+          <button class="btn" type="button" onclick="document.querySelector('[data-tab=book]').click()">Book a lesson</button>
+          <button class="btn" type="button" style="background:transparent;color:var(--court);border:1.5px solid var(--court);box-shadow:none;padding:14px" onclick="document.querySelector('[data-tab=contact]').click()">Ask a question first</button>
+        </div>
       </aside>
     </div>
   </section>
 
-  <!-- ============ CONTACT TAB ============ -->
+  <!-- ══ CONTACT ════════════════════════════════════════════ -->
   <section class="panel" id="contact">
-    <h2 class="section-h">Questions? Send a message</h2>
-    <p class="section-sub">Not ready to book yet? Tell me about your athlete and what you're looking for, and I'll get back to you by email.</p>
+    <h2 class="section-h">Get in touch</h2>
+    <p class="section-sub">Not ready to book yet? Ask me anything — about my approach, availability, pricing, or whether lessons are the right fit for your athlete.</p>
 
-    <div class="form-card">
-      <form id="contactForm">
-        <div class="row">
-          <div class="field">
-            <label>Your name <span class="req">*</span></label>
-            <input type="text" name="parent_name" required>
+    <div class="contact-wrap">
+      <div class="form-card" style="max-width:100%">
+        <form id="contactForm">
+          <div class="row">
+            <div class="field">
+              <label>Your name <span class="req">*</span></label>
+              <input type="text" name="parent_name" placeholder="Parent / guardian" required>
+            </div>
+            <div class="field">
+              <label>Your email <span class="req">*</span></label>
+              <input type="email" name="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>Athlete's age</label>
+              <input type="number" name="age" min="4" max="18">
+            </div>
+            <div class="field">
+              <label>Skill level</label>
+              <select name="skill_level">
+                <option value="">Select…</option>
+                <option>Beginner — brand new</option>
+                <option>Developing — some experience</option>
+                <option>Intermediate — plays regularly</option>
+                <option>Advanced — competitive / club</option>
+              </select>
+            </div>
           </div>
           <div class="field">
-            <label>Your email <span class="req">*</span></label>
-            <input type="email" name="email" required>
+            <label>Message <span class="req">*</span></label>
+            <textarea name="message" required placeholder="Tell me what you're hoping to get out of lessons, or just ask away…"></textarea>
           </div>
+          <button type="submit" class="btn" id="contactBtn">Send message →</button>
+          <div class="status" id="contactStatus"></div>
+          <p class="note">Your message comes straight to my inbox. I usually respond within a few hours.</p>
+        </form>
+      </div>
+
+      <div>
+        <div class="contact-info">
+          <h3>Response time</h3>
+          <p>I check messages morning and evening. Most inquiries get a reply within a few hours — rarely longer than 24.</p>
+
+          <h3>Where lessons take place</h3>
+          <p>All private lessons are held at <strong>The Sportzone</strong> in Indianapolis, Indiana — a full-service indoor facility with dedicated court space.</p>
+
+          <h3>Pricing &amp; packages</h3>
+          <p>Single sessions and multi-session packages available. See the <a href="#" style="color:var(--court);font-weight:600" onclick="document.querySelector('[data-tab=skills]').click();return false">Skills page</a> for current rates.</p>
+
+          <h3>Availability</h3>
+          <p>Weekday afternoons and Saturday mornings year-round. Holiday and school-break slots fill fast — book early.</p>
         </div>
-        <div class="row">
-          <div class="field">
-            <label>Child's age <span class="req">*</span></label>
-            <input type="number" name="age" min="4" max="18" required>
-          </div>
-          <div class="field">
-            <label>Child's gender <span class="req">*</span></label>
-            <select name="gender" required>
-              <option value="">Select…</option>
-              <option>Girl</option>
-              <option>Boy</option>
-              <option>Non-binary</option>
-              <option>Prefer not to say</option>
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <label>Skill level <span class="req">*</span></label>
-          <select name="skill_level" required>
-            <option value="">Select…</option>
-            <option>Beginner — brand new</option>
-            <option>Developing — some experience</option>
-            <option>Intermediate — plays regularly</option>
-            <option>Advanced — competitive / club</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Message <span class="req">*</span></label>
-          <textarea name="message" required placeholder="Tell me what you're hoping to get out of lessons…"></textarea>
-        </div>
-        <button type="submit" class="btn" id="contactBtn">Send message</button>
-        <div class="status" id="contactStatus"></div>
-        <p class="note">Your message is emailed straight to me. I'll reply as soon as I can.</p>
-      </form>
+      </div>
     </div>
   </section>
 
-  <footer>
-    © <span id="yr"></span> Set &amp; Spike Private Volleyball. Built for the love of the game.
-  </footer>
-</div>
+</div><!-- /wrap -->
+
+<footer>
+  <div class="footer-inner">
+    <span>© <span id="yr"></span> Garrett Bess Volleyball</span>
+    <span>Built for the love of the game</span>
+  </div>
+</footer>
 
 <script>
 /* ============================================================
@@ -382,125 +710,172 @@ const CONFIG = {
   //    0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
   //    Add/remove times freely. Empty array = no lessons that day.
   availability: {
-    0: [],                          // Sunday
-    1: ["16:00","17:00","18:00"],   // Monday
-    2: ["16:00","17:00"],           // Tuesday
-    3: ["16:00","17:00","18:00"],   // Wednesday
-    4: [],                          // Thursday
-    5: ["15:00","16:00","17:00"],   // Friday
-    6: ["09:00","10:00","11:00"],   // Saturday
+    0: [],                                                        // Sunday
+    1: ["10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"],  // Monday
+    2: ["10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"],  // Tuesday
+    3: ["10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"],  // Wednesday
+    4: ["10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"],  // Thursday
+    5: ["10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"],  // Friday
+    6: ["10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"],  // Saturday
   },
 
-  // 3) How many days ahead to show.
+  // 3) How many days ahead to show on the schedule.
   daysToShow: 14,
 };
-/* ===========  (no need to edit below this line)  =========== */
+/* ========== (no need to edit below this line) ========== */
 
 document.getElementById('yr').textContent = new Date().getFullYear();
 if (CONFIG.WEB3FORMS_KEY === "YOUR_ACCESS_KEY_HERE") {
   document.getElementById('setupBanner').classList.add('show');
 }
 
-// Tabs
-document.querySelectorAll('.tab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById(t.dataset.tab).classList.add('active');
-  });
+// Tab switching — works for both nav-tabs and any button with data-tab
+function activateTab(tabName) {
+  document.querySelectorAll('.nav-tab').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+  const tab = document.querySelector(`.nav-tab[data-tab="${tabName}"]`);
+  const panel = document.getElementById(tabName);
+  if (tab) tab.classList.add('active');
+  if (panel) panel.classList.add('active');
+
+  // Show hero only on book tab
+  document.querySelector('.hero').style.display = tabName === 'book' ? '' : 'none';
+
+  if (tabName === 'book') {
+    // Scroll to the "Pick a time" section, accounting for sticky nav
+    requestAnimationFrame(() => {
+      const navH = document.querySelector('.nav').offsetHeight;
+      const y = document.getElementById('book').getBoundingClientRect().top + window.scrollY - navH - 16;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    });
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+document.querySelectorAll('.nav-tab').forEach(t => {
+  t.addEventListener('click', () => activateTab(t.dataset.tab));
 });
 
-// Build schedule
+// Date / time dropdowns
 const DOW = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-function fmtTime(hhmm){
-  let [h,m]=hhmm.split(':').map(Number);
-  const ap=h>=12?'PM':'AM'; h=h%12||12;
+const MONFULL = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+function fmtTime(hhmm) {
+  let [h, m] = hhmm.split(':').map(Number);
+  const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
   return `${h}:${String(m).padStart(2,'0')} ${ap}`;
 }
-const daysEl=document.getElementById('days');
-const today=new Date(); today.setHours(0,0,0,0);
-for(let i=0;i<CONFIG.daysToShow;i++){
-  const d=new Date(today); d.setDate(today.getDate()+i);
-  const slots=CONFIG.availability[d.getDay()]||[];
-  if(slots.length===0 && i>0) continue; // skip empty days (but always render today)
-  const card=document.createElement('div'); card.className='day';
-  card.innerHTML=`<div class="day-name">${DOW[d.getDay()]}</div>
-                  <div class="day-date">${MON[d.getMonth()]} ${d.getDate()}</div>`;
-  if(slots.length===0){
-    const none=document.createElement('div'); none.className='slot none'; none.textContent='No lessons';
-    card.appendChild(none);
-  } else {
-    slots.forEach(s=>{
-      const label=`${DOW[d.getDay()]}, ${MON[d.getMonth()]} ${d.getDate()} · ${fmtTime(s)}`;
-      const b=document.createElement('button'); b.className='slot'; b.type='button';
-      b.textContent=fmtTime(s);
-      b.addEventListener('click',()=>selectSlot(label));
-      card.appendChild(b);
-    });
+
+// Build the date dropdown with the next CONFIG.daysToShow days that have available slots
+(function buildDateDropdown() {
+  const sel = document.getElementById('dateSelect');
+  const today = new Date(); today.setHours(0,0,0,0);
+  for (let i = 0; i < CONFIG.daysToShow; i++) {
+    const d = new Date(today); d.setDate(today.getDate() + i);
+    const slots = CONFIG.availability[d.getDay()] || [];
+    if (slots.length === 0) continue;
+    const label = `${DOW[d.getDay()]}, ${MONFULL[d.getMonth()]} ${d.getDate()}`;
+    const val   = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    const opt = new Option(label, val);
+    opt.dataset.slots = JSON.stringify(slots);
+    sel.appendChild(opt);
   }
-  daysEl.appendChild(card);
-}
+})();
 
-function selectSlot(label){
-  const box=document.getElementById('selectedSlot');
-  box.textContent='Selected: '+label;
-  box.classList.add('show');
-  document.getElementById('bookSlotField').value=label;
-  box.scrollIntoView({behavior:'smooth',block:'center'});
-}
+function onDateChange() {
+  const dateSel = document.getElementById('dateSelect');
+  const timeSel = document.getElementById('timeSelect');
+  const chosen  = dateSel.options[dateSel.selectedIndex];
 
-// Generic submit handler -> Web3Forms
-async function submitForm(form, statusEl, btn, subjectPrefix){
-  const status=document.getElementById(statusEl);
-  const button=document.getElementById(btn);
-  if(CONFIG.WEB3FORMS_KEY==="YOUR_ACCESS_KEY_HERE"){
-    status.className='status err show';
-    status.textContent='Setup needed: add your Web3Forms access key in the CONFIG block to enable email sending.';
+  // reset time dropdown
+  timeSel.innerHTML = '';
+  document.getElementById('selectedSlot').classList.remove('show');
+  document.getElementById('bookSlotField').value = '';
+
+  if (!dateSel.value) {
+    timeSel.appendChild(new Option('Select a date first…', ''));
+    timeSel.disabled = true;
     return;
   }
-  const data=Object.fromEntries(new FormData(form).entries());
-  data.access_key=CONFIG.WEB3FORMS_KEY;
-  data.subject=subjectPrefix+(data.athlete_name||data.parent_name||'New inquiry');
-  button.disabled=true; button.textContent='Sending…';
-  status.className='status'; status.textContent='';
-  try{
-    const res=await fetch('https://api.web3forms.com/submit',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify(data)
+
+  timeSel.appendChild(new Option('Select a time…', ''));
+  const slots = JSON.parse(chosen.dataset.slots);
+  slots.forEach(s => timeSel.appendChild(new Option(fmtTime(s), s)));
+  timeSel.disabled = false;
+  timeSel.focus();
+}
+
+function onTimeChange() {
+  const dateSel = document.getElementById('dateSelect');
+  const timeSel = document.getElementById('timeSelect');
+  if (!timeSel.value) {
+    document.getElementById('selectedSlot').classList.remove('show');
+    document.getElementById('bookSlotField').value = '';
+    return;
+  }
+  const dateLabel = dateSel.options[dateSel.selectedIndex].text;
+  const label = `${dateLabel} · ${fmtTime(timeSel.value)}`;
+  document.getElementById('selectedSlot').textContent = '✓ Selected: ' + label;
+  document.getElementById('selectedSlot').classList.add('show');
+  document.getElementById('bookSlotField').value = label;
+}
+
+// Generic form submit → Web3Forms
+async function submitForm(form, statusId, btnId, subjectPrefix) {
+  const status = document.getElementById(statusId);
+  const button = document.getElementById(btnId);
+  if (CONFIG.WEB3FORMS_KEY === "YOUR_ACCESS_KEY_HERE") {
+    status.className = 'status err show';
+    status.textContent = 'Setup needed: add your Web3Forms access key in the CONFIG block to enable email sending.';
+    return;
+  }
+  const data = Object.fromEntries(new FormData(form).entries());
+  data.access_key = CONFIG.WEB3FORMS_KEY;
+  data.subject = subjectPrefix + (data.athlete_name || data.parent_name || 'New inquiry');
+  button.disabled = true; button.textContent = 'Sending…';
+  status.className = 'status'; status.textContent = '';
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
     });
-    const out=await res.json();
-    if(out.success){
-      status.className='status ok show';
-      status.textContent='✓ Sent! I\u2019ll get back to you by email shortly.';
+    const out = await res.json();
+    if (out.success) {
+      status.className = 'status ok show';
+      status.textContent = '✓ Sent! I\'ll get back to you by email shortly.';
       form.reset();
-      document.getElementById('selectedSlot')?.classList.remove('show');
+      document.getElementById('dateSelect').value = '';
+      onDateChange();
+      document.getElementById('selectedSlot').classList.remove('show');
     } else {
-      throw new Error(out.message||'Send failed');
+      throw new Error(out.message || 'Send failed');
     }
-  }catch(e){
-    status.className='status err show';
-    status.textContent='Something went wrong sending that. Please try again, or email me directly.';
-  }finally{
-    button.disabled=false;
-    button.textContent = btn==='bookBtn' ? 'Request this lesson' : 'Send message';
+  } catch(e) {
+    status.className = 'status err show';
+    status.textContent = 'Something went wrong sending that. Please try again, or email me directly.';
+  } finally {
+    button.disabled = false;
+    button.textContent = btnId === 'bookBtn' ? 'Request this lesson →' : 'Send message →';
   }
 }
 
-document.getElementById('bookForm').addEventListener('submit',e=>{
+document.getElementById('bookForm').addEventListener('submit', e => {
   e.preventDefault();
-  if(!document.getElementById('bookSlotField').value){
-    const s=document.getElementById('bookStatus');
-    s.className='status err show'; s.textContent='Pick a time slot above first.';
+  if (!document.getElementById('bookSlotField').value) {
+    const s = document.getElementById('bookStatus');
+    s.className = 'status err show';
+    s.textContent = 'Please select a date and time first.';
     return;
   }
-  submitForm(e.target,'bookStatus','bookBtn','New lesson request — ');
+  submitForm(e.target, 'bookStatus', 'bookBtn', 'New lesson request — ');
 });
-document.getElementById('contactForm').addEventListener('submit',e=>{
+
+document.getElementById('contactForm').addEventListener('submit', e => {
   e.preventDefault();
-  submitForm(e.target,'contactStatus','contactBtn','New contact message — ');
+  submitForm(e.target, 'contactStatus', 'contactBtn', 'New contact message — ');
 });
 </script>
 </body>
