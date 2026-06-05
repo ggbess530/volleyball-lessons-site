@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garrett Bess — AI Web Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --white: #F2F0EB;
+    --orange: #FF5C00;
+    --orange-dim: #FF5C0022;
+    --gray: #1A1A1A;
+    --gray2: #2A2A2A;
+    --text-muted: #888;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--orange);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--orange);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: left 0.12s ease, top 0.12s ease, width 0.2s, height 0.2s;
+    opacity: 0.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    backdrop-filter: blur(12px);
+    background: rgba(8,8,8,0.85);
+  }
+
+  .nav-logo {
+    font-family: 'Black Ops One', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+  .nav-logo span { color: var(--orange); }
+
+  .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--orange);
+    color: var(--black) !important;
+    padding: 0.5rem 1.2rem !important;
+    font-weight: 600 !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: #ff7a2e !important; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', sans-serif;
+    font-size: clamp(8rem, 18vw, 22rem);
+    color: rgba(255,92,0,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -4px;
+    user-select: none;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 24px; height: 2px;
+    background: var(--orange);
+  }
+
+  h1 {
+    font-family: 'Black Ops One', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 8rem);
+    line-height: 0.92;
+    letter-spacing: -1px;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s forwards;
+  }
+
+  h1 .line2 {
+    color: var(--orange);
+    display: block;
+    -webkit-text-stroke: 0px;
+  }
+
+  h1 .outline {
+    -webkit-text-stroke: 2px var(--white);
+    color: transparent;
+  }
+
+  .hero-desc {
+    max-width: 480px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s forwards;
+  }
+
+  .hero-desc strong { color: var(--white); font-weight: 600; }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.65s forwards;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: var(--black);
+    border: none;
+    padding: 0.85rem 2rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(255,92,0,0.4);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    color: var(--white);
+    padding: 0.85rem 2rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: border-color 0.2s, color 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+
+  .hero-stats {
+    position: absolute;
+    right: 4rem;
+    bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.8s forwards;
+  }
+
+  .stat { text-align: right; }
+  .stat-num {
+    font-family: 'Black Ops One', sans-serif;
+    font-size: 2.8rem;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--orange); }
+  .stat-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0;
+    animation: fadeUp 0.7s 1s forwards;
+  }
+
+  .scroll-line {
+    width: 40px; height: 1px;
+    background: var(--text-muted);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    left: -100%; top: 0;
+    width: 100%; height: 100%;
+    background: var(--orange);
+    animation: scanline 2s infinite;
+  }
+  @keyframes scanline { to { left: 100%; } }
+
+  /* SERVICES */
+  .services {
+    padding: 7rem 3rem;
+    position: relative;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding-bottom: 2rem;
+  }
+
+  .section-num {
+    font-family: 'Black Ops One', sans-serif;
+    font-size: 0.8rem;
+    color: var(--orange);
+    letter-spacing: 3px;
+  }
+
+  h2 {
+    font-family: 'Black Ops One', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+
+  .section-sub {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    max-width: 220px;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .services-list { display: flex; flex-direction: column; gap: 0; }
+
+  .service-row {
+    display: grid;
+    grid-template-columns: 60px 1fr auto auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.2s, padding 0.2s;
+    position: relative;
+    cursor: none;
+  }
+
+  .service-row::before {
+    content: '';
+    position: absolute;
+    left: -3rem; right: -3rem;
+    top: 0; bottom: 0;
+    background: var(--orange-dim);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .service-row:hover::before { opacity: 1; }
+  .service-row:hover .service-name { color: var(--orange); }
+  .service-row:hover .service-arrow { transform: translateX(6px); color: var(--orange); }
+
+  .service-idx {
+    font-family: 'Black Ops One', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+  }
+
+  .service-name {
+    font-family: 'Black Ops One', sans-serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .service-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .tag {
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 0.3rem 0.6rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .service-arrow {
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.3);
+    transition: transform 0.2s, color 0.2s;
+  }
+
+  /* PROJECTS */
+  .projects {
+    padding: 7rem 3rem;
+    background: var(--gray);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5px;
+    background: rgba(255,255,255,0.06);
+    margin-top: 4rem;
+  }
+
+  .project-card {
+    background: var(--gray);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s;
+    cursor: none;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .project-card:hover { background: #1f1f1f; }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--orange);
+    transition: width 0.4s ease;
+  }
+  .project-card:hover::after { width: 100%; }
+
+  .project-type {
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .project-name {
+    font-family: 'Black Ops One', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.8rem;
+    line-height: 1.1;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    flex: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .project-tech { display: flex; gap: 0.4rem; }
+  .tech-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+  }
+  .tech-dot.active { background: var(--orange); }
+
+  .project-link {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 600;
+  }
+  .project-link:hover { color: var(--orange); }
+
+  .project-card.featured {
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+    min-height: 200px;
+  }
+  .project-card.featured .project-content { flex: 1; }
+  .project-card.featured .project-visual {
+    width: 180px; height: 180px;
+    border: 2px solid rgba(255,92,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    flex-shrink: 0;
+    background: var(--orange-dim);
+  }
+
+  /* ABOUT */
+  .about {
+    padding: 7rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .about-left h2 { margin-bottom: 1.5rem; }
+  .about-left p {
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+  .about-left p strong { color: var(--white); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .skill-item {
+    padding: 1rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--orange);
+  }
+
+  .skill-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+  .skill-detail { font-size: 0.72rem; color: var(--text-muted); }
+
+  .about-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5px;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .about-card {
+    background: var(--gray);
+    padding: 1.8rem 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+
+  .about-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .about-card-title {
+    font-family: 'Black Ops One', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+  }
+  .about-card-text { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* CTA */
+  .cta-section {
+    padding: 7rem 3rem;
+    background: var(--orange);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', sans-serif;
+    font-size: clamp(6rem, 15vw, 18rem);
+    color: rgba(0,0,0,0.08);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -4px;
+  }
+
+  .cta-section h2 {
+    font-family: 'Black Ops One', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    color: var(--black);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .cta-section p {
+    font-size: 1rem;
+    color: rgba(0,0,0,0.65);
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .btn-dark {
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    padding: 1rem 2.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+  }
+  .btn-dark:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  }
+
+  .cta-email {
+    display: block;
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+    position: relative;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-logo {
+    font-family: 'Black Ops One', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+  .footer-logo span { color: var(--orange); }
+
+  .footer-right { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 1px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <div class="nav-logo">GB<span>.</span></div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#projects">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact" class="nav-cta">Hire Me</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">BESS</div>
+
+  <div class="hero-tag">Available for Projects · Indianapolis</div>
+
+  <h1>
+    GARRETT<br>
+    <span class="line2">BESS</span><br>
+    <span class="outline">BUILDS.</span>
+  </h1>
+
+  <p class="hero-desc">
+    I build <strong>AI-powered websites</strong> for local businesses — fast, smart, and fully automated. From booking systems to full brand sites, I handle it all.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">Start a Project →</a>
+    <a href="#projects" class="btn-ghost">See My Work</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">48<span>hr</span></div>
+      <div class="stat-label">Avg Turnaround</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100<span>%</span></div>
+      <div class="stat-label">AI-Integrated</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header">
+    <div>
+      <div class="section-num">01 — SERVICES</div>
+      <h2>WHAT I DO</h2>
+    </div>
+    <div class="section-sub">Fast builds. Smart automation. Real results.</div>
+  </div>
+
+  <div class="services-list">
+    <div class="service-row">
+      <div class="service-idx">01</div>
+      <div class="service-name">AI-Powered Websites</div>
+      <div class="service-tags">
+        <span class="tag">Framer</span>
+        <span class="tag">AI Chat</span>
+        <span class="tag">Auto-booking</span>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-row">
+      <div class="service-idx">02</div>
+      <div class="service-name">Booking Systems</div>
+      <div class="service-tags">
+        <span class="tag">Calendly</span>
+        <span class="tag">Stripe</span>
+        <span class="tag">Zapier</span>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-row">
+      <div class="service-idx">03</div>
+      <div class="service-name">AI Automation</div>
+      <div class="service-tags">
+        <span class="tag">Workflows</span>
+        <span class="tag">Email Sequences</span>
+        <span class="tag">Chatbots</span>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-row">
+      <div class="service-idx">04</div>
+      <div class="service-name">Landing Pages</div>
+      <div class="service-tags">
+        <span class="tag">Fast</span>
+        <span class="tag">Conversion-focused</span>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="section-header">
+    <div>
+      <div class="section-num">02 — PROJECTS</div>
+      <h2>RECENT WORK</h2>
+    </div>
+    <div class="section-sub">Real sites. Real clients. Real results.</div>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-card featured">
+      <div class="project-visual">🏐</div>
+      <div class="project-content">
+        <div class="project-type">Sports & Coaching</div>
+        <div class="project-name">Private Volleyball Lessons</div>
+        <p class="project-desc">Full booking site with AI-managed scheduling, Stripe payments, and automated client reminders. Zero manual work after setup — clients book, pay, and get confirmations automatically.</p>
+        <div class="project-footer">
+          <div class="project-tech">
+            <div class="tech-dot active"></div>
+            <div class="tech-dot active"></div>
+            <div class="tech-dot active"></div>
+            <div class="tech-dot"></div>
+          </div>
+          <a href="#" class="project-link">View Site →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-type">Local Business</div>
+      <div class="project-name">Coming Soon</div>
+      <p class="project-desc">Your business could be here. I'm actively taking on new clients in the Indianapolis area and beyond.</p>
+      <div class="project-footer">
+        <div class="project-tech">
+          <div class="tech-dot"></div>
+          <div class="tech-dot"></div>
+          <div class="tech-dot"></div>
+        </div>
+        <a href="#contact" class="project-link">Let's Talk →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-type">Service Business</div>
+      <div class="project-name">Coming Soon</div>
+      <p class="project-desc">Barbers, gyms, tutors, trainers — if you take appointments, I can automate your entire client flow.</p>
+      <div class="project-footer">
+        <div class="project-tech">
+          <div class="tech-dot"></div>
+          <div class="tech-dot"></div>
+          <div class="tech-dot"></div>
+        </div>
+        <a href="#contact" class="project-link">Let's Talk →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-left">
+    <div class="section-num" style="margin-bottom:0.5rem">03 — ABOUT</div>
+    <h2 style="margin-bottom:1.5rem">WHO I AM</h2>
+    <p>I'm <strong>Garrett Bess</strong>, based in Indianapolis. I build AI-powered websites that actually work — not just pretty pages, but fully automated systems that save business owners time and money.</p>
+    <p>My background spans <strong>computer science, AI tools, music production, and sports coaching</strong> — which means I think creatively, solve problems fast, and build things that are genuinely useful.</p>
+    <p>I specialize in getting local businesses online quickly with systems that run themselves.</p>
+
+    <div class="skills-grid">
+      <div class="skill-item">
+        <div class="skill-name">AI Tools</div>
+        <div class="skill-detail">Claude, ChatGPT, Zapier AI</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Web Build</div>
+        <div class="skill-detail">Framer, Webflow, HTML/CSS</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Automation</div>
+        <div class="skill-detail">Zapier, Calendly, Stripe</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">CS & Code</div>
+        <div class="skill-detail">Python, JavaScript, APIs</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-right">
+    <div class="about-card">
+      <div class="about-icon">⚡</div>
+      <div>
+        <div class="about-card-title">Fast Turnaround</div>
+        <div class="about-card-text">Most sites are live within 48–72 hours of kickoff. No lengthy back-and-forth, no delays.</div>
+      </div>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">🤖</div>
+      <div>
+        <div class="about-card-title">AI-First Approach</div>
+        <div class="about-card-text">Every site I build includes smart automation — so your business runs even when you're not working.</div>
+      </div>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">📍</div>
+      <div>
+        <div class="about-card-title">Local + Remote</div>
+        <div class="about-card-text">Based in Indianapolis. I work with local businesses in person and clients anywhere remotely.</div>
+      </div>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">💰</div>
+      <div>
+        <div class="about-card-title">Honest Pricing</div>
+        <div class="about-card-text">Flat-rate project quotes. No surprise fees, no hourly billing anxiety. You know what you're paying upfront.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-bg">LET'S GO</div>
+  <h2>READY TO BUILD?</h2>
+  <p>Tell me about your business and I'll send you a free mockup within 24 hours.</p>
+  <a href="mailto:garrett@example.com" class="btn-dark">Get a Free Mockup →</a>
+  <span class="cta-email">or email garrett@example.com</span>
+</section>
+
+<footer>
+  <div class="footer-logo">GARRETT <span>BESS</span></div>
+  <div class="footer-right">© 2026 · Indianapolis, IN · AI Web Builder</div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .service-row, .project-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px';
+      cursor.style.height = '20px';
+      ring.style.width = '56px';
+      ring.style.height = '56px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px';
+      cursor.style.height = '12px';
+      ring.style.width = '36px';
+      ring.style.height = '36px';
+    });
+  });
+</script>
+
+</body>
+</html>
